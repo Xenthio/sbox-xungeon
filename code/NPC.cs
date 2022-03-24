@@ -218,12 +218,14 @@ public partial class NPC : AnimEntity, IGlow
 			Bored();
 		}
 
+		// todo fix this absolute SHIT
 			TraceResult tr = Trace.Ray( EyePosition, EyePosition + LookDir * (2000 * Scale) )
 			.Radius( 10.0f )
 			.HitLayer( CollisionLayer.Debris )
 			.Ignore( this )
 			.EntitiesOnly()
 			.Run();
+			// also make it so that the source of sounds are found if in "what was that noise?" mode.
 
 			var ent = tr.Entity;
 			if ( ent != null && ent.IsValid && ent is DungeonPlayer )
@@ -250,7 +252,7 @@ public partial class NPC : AnimEntity, IGlow
 		if ( alert == reactDelay )
 		{
 			//Log.Info( "Alert" );
-			//If theres a POI look over there, else look around
+			//If theres a POI look over there, (TODO) else look around
 			goLookAt = placeOfInterest;
 			search = 2000;
 		}
@@ -274,7 +276,8 @@ public partial class NPC : AnimEntity, IGlow
 			alert = 0;
 			goLookAt = Vector3.Zero;
 		}
-		if (placeOfInterest != Vector3.Zero)
+
+		if (placeOfInterest != Vector3.Zero) // why do i need this 'if' again?
 		{
 			//i'm interested, huh
 
