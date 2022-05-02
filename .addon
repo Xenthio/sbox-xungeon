@@ -9,5 +9,12 @@
   "ResourcePaths": null,
   "HasCode": true,
   "CodePath": "/code/",
-  "RootNamespace": "Sandbox"
+  "RootNamespace": "Sandbox",
+  "Metadata": {
+    "MapList": [
+      "xenthio,xungeontest"
+    ],
+    "GameNetworkType": 0,
+    "MapSelect": 3
+  }
 }

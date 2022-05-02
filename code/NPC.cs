@@ -97,6 +97,8 @@ public partial class NPC : AnimEntity, IGlow
 	int search = 0;
 	int boredom = 0;
 	int alert = 0;
+
+	int dumbassTick = 0;
 	Vector3 placeOfInterest = Vector3.Zero;
 	float Speed;
 
@@ -147,6 +149,8 @@ public partial class NPC : AnimEntity, IGlow
 	public void Bored()
 	{
 
+		GameTask.RunInThreadAsync( lookLeftRight );
+		boredom = 0;
 	}
 	public void Search()
 	{
@@ -173,6 +177,8 @@ public partial class NPC : AnimEntity, IGlow
 
 	private void lookLeftRight()
 	{
+		Log.Info( "ltr" );
+
 		goLookAt = Position + (Vector3.Left * 50) + ( Vector3.Backward * 1.1f );
 		GameTask.Delay( 1500 );
 
@@ -180,9 +186,33 @@ public partial class NPC : AnimEntity, IGlow
 
 		GameTask.Delay( 1500 );
 
-		goLookAt = Position + (Vector3.Forward * 50) + (Vector3.Backward * 1.1f);
+		goLookAt = Position + (Vector3.Forward * 50); //+ (Vector3.Backward * 1.1f);
 	}
-	public void AIThink()
+	private void lookAt(Vector3 toLook)
+	{
+
+		goLookAt = toLook;
+		/*if (i < 200, i++) {
+
+		}*/
+		GameTask.Delay( 2000 );
+
+		goLookAt = Position + (Vector3.Right * 50) + (Vector3.Backward * 1.1f);
+
+		GameTask.Delay( 2000 );
+
+	}
+
+	private void LookingAtWall()
+	{
+		// turn around, thats a wall dumbass.
+		// TODO: what if this is a special wall, like a door or a button (if i even get around to something as deep as buttons)
+		
+		Steer = new NavSteer();
+		Steer.Target = Position + (Vector3.Backward * 10);
+	}
+
+		public void AIThink()
 	{ 
 		float i = Position.z;
 		//Vector3 look = Position + Vector3.Random * 10;
@@ -196,6 +226,10 @@ public partial class NPC : AnimEntity, IGlow
 		if ( search > 0 )
 		{
 			search--;
+		}
+		if ( dumbassTick > 0 )
+		{
+			dumbassTick--;
 		}
 
 		if (boredom == 30) {
@@ -218,24 +252,64 @@ public partial class NPC : AnimEntity, IGlow
 			Bored();
 		}
 
+		// ------ The code for the NPC to see ------ 
 		// todo fix this absolute SHIT
-			TraceResult tr = Trace.Ray( EyePosition, EyePosition + LookDir * (2000 * Scale) )
-			.Radius( 10.0f )
+		TraceResult tr = Trace.Ray( EyePosition, EyePosition + LookDir * (2000 * Scale) )
+			.Radius( 30.0f )
 			.HitLayer( CollisionLayer.Debris )
 			.Ignore( this )
 			.EntitiesOnly()
 			.Run();
 			// also make it so that the source of sounds are found if in "what was that noise?" mode.
 
-			var ent = tr.Entity;
-			if ( ent != null && ent.IsValid && ent is DungeonPlayer )
+		var ent = tr.Entity;
+		if ( ent != null && ent.IsValid && ent is DungeonPlayer )
+		{
+			// ALERT ENEMY!!!!
+			if ( Steer == null )
 			{
-				// ALERT ENEMY!!!!
 				Steer = new NavSteer();
-				Steer.Target = tr.Entity.Position;
+			}
+			Steer.Target = tr.Entity.Position;
 			
 
+		} else if (ent != null && ent.IsValid)
+		{
+			if ( dumbassTick > 900 )
+			{
+				Log.Info( "oo shiny" );
+				lookAt( ent.Position );
 			}
+			else if ( dumbassTick == 0 )
+			{
+				dumbassTick = 1000;
+			}
+			// look at props and stuff when they're close to them
+		}
+		// wall detection FIX THIS WHAT THE FUCK
+
+		/*TraceResult tr2 = Trace.Ray( EyePosition, EyePosition + LookDir * (20 * Scale) )
+			.Radius( 1.0f )
+			.HitLayer( CollisionLayer.Debris )
+			.Ignore( this )
+			.WorldOnly()
+			.Run();
+		MoveHelper move = new( Position, Velocity );
+		var tr2 = move.TraceDirection( Vector3.Forward * 10.0f );
+		if (move.HitWall)
+		{
+			// too close to wall D:
+			if (dumbassTick > 900)
+			{
+				Log.Info( "WALL" );
+				LookingAtWall();
+			} 
+			else if (dumbassTick == 0)
+			{
+				dumbassTick = 1000;
+			}
+			
+		}*/
 
 
 
@@ -297,6 +371,7 @@ public partial class NPC : AnimEntity, IGlow
 					boredom = 0;
 					InputVelocity = Steer.Output.Direction.Normal;
 					Velocity = Velocity.AddClamped( InputVelocity * Time.Delta * 500, Speed );
+
 				} 
 				
 
@@ -323,7 +398,7 @@ public partial class NPC : AnimEntity, IGlow
 			if ( goLookAt != Vector3.Zero )
 			{
 
-				LookDir = Vector3.Lerp( LookDir, goLookAt.WithZ(Position.z), Time.Delta * 100.0f );
+				LookDir = Vector3.Lerp( LookDir, goLookAt, Time.Delta * 100.0f );
 
 
 				animHelper.WithLookAt( LookDir );

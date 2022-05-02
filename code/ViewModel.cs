@@ -33,7 +33,7 @@ public class ViewModel : BaseViewModel
 		Position = camSetup.Position;
 		Rotation = camSetup.Rotation;
 
-		camSetup.ViewModel.FieldOfView = FieldOfView;
+		camSetup.ViewModel.FieldOfView = 70;
 
 		var playerVelocity = Local.Pawn.Velocity;
 

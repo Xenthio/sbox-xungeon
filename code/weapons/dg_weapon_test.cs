@@ -46,7 +46,7 @@ partial class dgweapontest : Weapon
 		//
 		ShootEffects();
 		PlaySound( "rust_pistol.shoot" );
-		Sounds.alertSound( EyePosition );
+		Sounds.alertSound( EyePosition.WithZ(EyePosition.z-28) );
 		
 
 		//
