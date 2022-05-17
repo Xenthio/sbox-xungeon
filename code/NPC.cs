@@ -223,8 +223,13 @@ public partial class NPC : AnimEntity, IGlow
 		float i = Position.z;
 		//Vector3 look = Position + Vector3.Random * 10;
 		//look.z = i;
+		
+		// TODO: Abstract this
+		
 		boredom++;
-
+		
+		
+		
 		if ( alert > 0 )
 		{
 			alert++;
