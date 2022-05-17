@@ -148,8 +148,14 @@ public partial class NPC : AnimEntity, IGlow
 	}
 	public void Bored()
 	{
-
-		GameTask.RunInThreadAsync( lookLeftRight );
+		// Bordem! Everyone hates being bored, so naturally these NPC's should aswell.
+		// If we've reached here, it means we're bored. Let's go look for something to do.
+		
+		// TODO: Do something random here, right now we only have look left and right
+		GameTask.RunInThreadAsync( lookLeftRight ); // Look left and right
+		// Potentially do things like look around and if we see something interesting go walk over to it
+		// Maybe if other enemies are around go look at them, maybe nod or something aswell
+		// Maybe go pace around or something.
 		boredom = 0;
 	}
 	public void Search()
