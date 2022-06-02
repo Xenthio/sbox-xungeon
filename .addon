@@ -12,7 +12,7 @@
   "RootNamespace": "Sandbox",
   "Metadata": {
     "MapList": [
-      "xenthio,xungeontest"
+      "xenthio.xungeontest"
     ],
     "GameNetworkType": 0,
     "MapSelect": 3,
