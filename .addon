@@ -15,6 +15,11 @@
       "xenthio,xungeontest"
     ],
     "GameNetworkType": 0,
-    "MapSelect": 3
+    "MapSelect": 3,
+    "PerMapRanking": false,
+    "LeaderboardType": 0,
+    "RankType": 0,
+    "MaxPlayers": 0,
+    "MinPlayers": 0
   }
 }

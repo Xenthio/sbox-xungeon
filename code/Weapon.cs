@@ -110,7 +110,7 @@ namespace Sandbox
 
 			IsReloading = true;
 
-			(Owner as AnimEntity).SetAnimParameter( "b_reload", true );
+			(Owner as AnimatedEntity).SetAnimParameter( "b_reload", true );
 
 			StartReloadEffects();
 		}
@@ -166,13 +166,7 @@ namespace Sandbox
 
 			Particles.Create( "particles/pistol_muzzleflash.vpcf", EffectEntity, "muzzle" );
 
-			if ( IsLocalPawn )
-			{
-				new Sandbox.ScreenShake.Perlin();
-			}
-
 			ViewModelEntity?.SetAnimParameter( "fire", true );
-			CrosshairPanel?.CreateEvent( "fire" );
 		}
 
 		/// <summary>

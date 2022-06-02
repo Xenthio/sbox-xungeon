@@ -13,8 +13,8 @@ public class NavPath
 	public void Update( Vector3 from, Vector3 to )
 	{
 		bool needsBuild = false;
-
-		if ( !TargetPosition.IsNearlyEqual( to, 5 ) )
+		
+		if ( !TargetPosition.AlmostEqual( to, 5 ) )
 		{
 			TargetPosition = to;
 			needsBuild = true;

@@ -8,7 +8,7 @@ using System.Linq;
 	{
 		//public int AmmoCount(AmmoType test) {return 100; }
 
-		public Clothing.Container Clothing = new();
+		public ClothingContainer Clothing = new();
 
 		public DungeonPlayer()
 		{

@@ -2,7 +2,7 @@
 using Sandbox.Component;
 using System;
 
-public partial class NPC : AnimEntity, IGlow
+public partial class NPC : AnimatedEntity, IGlow
 {
 
 
@@ -162,7 +162,7 @@ public partial class NPC : AnimEntity, IGlow
 
 		if ( !wander.FindNewTarget( Position ) )
 		{
-			DebugOverlay.Text( EyePosition, "COULDN'T FIND A WANDERING POSITION!", 5.0f );
+			DebugOverlay.Text( "COULDN'T FIND A WANDERING POSITION!", EyePosition, 5.0f );
 		}
 		else
 		{

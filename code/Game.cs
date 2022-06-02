@@ -35,7 +35,7 @@ using System.Threading.Tasks;
 
 		}
 
-		[AdminCmd( "respawn_entities" )]
+		[ConCmd.Admin( "respawn_entities" )]
 		public static void RespawnEntities()
 		{
 			Map.Reset( DefaultCleanupFilter );

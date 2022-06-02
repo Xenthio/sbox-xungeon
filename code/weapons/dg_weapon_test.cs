@@ -2,7 +2,7 @@
 using System;
 
 [Library( "dg_weapon_test", Title = "Pistol" )]
-[Hammer.EditorModel( "weapons/rust_pistol/rust_pistol.vmdl" )]
+[EditorModel( "weapons/rust_pistol/rust_pistol.vmdl" )]
 partial class dgweapontest : Weapon
 {
 
@@ -26,7 +26,7 @@ partial class dgweapontest : Weapon
 
 	public override bool CanPrimaryAttack()
 	{
-		return base.CanPrimaryAttack() && Input.Pressed( InputButton.Attack1 );
+		return base.CanPrimaryAttack() && Input.Pressed( InputButton.PrimaryAttack );
 	}
 
 	public override void AttackPrimary()
