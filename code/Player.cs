@@ -96,7 +96,6 @@ using System.Linq;
 			base.FrameSimulate( cl );
 			var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * (150 * Scale) )
 			.Radius(1.5f)
-			.HitLayer( CollisionLayer.Debris )
 			.Ignore( this )
 			.Run();
 			var ent = tr.Entity;

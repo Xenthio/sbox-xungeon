@@ -16,9 +16,12 @@ public partial class NPC : AnimatedEntity, IGlow
 	public override void Spawn()
 	{
 		base.Spawn();
+		this.Tags.Add( "solid" );
 		SetModel( "models/sbox_props/watermelon/watermelon.vmdl" );
+		//EnableAllCollisions = true;
 		this.Health = maxHealth;
 		UsePhysicsCollision = true;
+		//PhysicsEnabled = true;
 		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
 		Speed = Rand.Float( 100, 300 );
 	}
@@ -32,7 +35,7 @@ public partial class NPC : AnimatedEntity, IGlow
 				hpPanel.Transform = Transform;
 			}
 		}
-		if (Health > 0) 
+		if (Health > 0)
 		{
 			var glow = this.Components.GetOrCreate<Glow>();
 			glow.Active = true;
@@ -111,7 +114,7 @@ public partial class NPC : AnimatedEntity, IGlow
 	public NavSteer Steer;
 
 	Vector3 goLookAt = Vector3.Zero;
-	Vector3 Velocity;
+	new Vector3 Velocity;
 	Vector3 InputVelocity;
 
 	Vector3 LookDir;
@@ -267,7 +270,6 @@ public partial class NPC : AnimatedEntity, IGlow
 		// todo fix this absolute SHIT
 		TraceResult tr = Trace.Ray( EyePosition, EyePosition + LookDir * (2000 * Scale) )
 			.Radius( 30.0f )
-			.HitLayer( CollisionLayer.Debris )
 			.Ignore( this )
 			.EntitiesOnly()
 			.Run();

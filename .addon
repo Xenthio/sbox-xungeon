@@ -14,12 +14,17 @@
     "MapList": [
       "xenthio.xungeontest"
     ],
-    "GameNetworkType": 0,
-    "MapSelect": 3,
+    "GameNetworkType": "Singleplayer",
+    "MapSelect": "Official",
     "PerMapRanking": false,
-    "LeaderboardType": 0,
-    "RankType": 0,
+    "LeaderboardType": "None",
+    "RankType": "None",
     "MaxPlayers": 0,
-    "MinPlayers": 0
+    "MinPlayers": 0,
+    "Compiler": {
+      "RootNamespace": "Sandbox",
+      "DefineConstants": "SANDBOX;ADDON;DEBUG",
+      "NoWarn": "1701;1702;1591;"
+    }
   }
 }

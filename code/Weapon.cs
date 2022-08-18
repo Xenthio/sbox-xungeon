@@ -169,6 +169,7 @@ namespace Sandbox
 			ViewModelEntity?.SetAnimParameter( "fire", true );
 		}
 
+
 		/// <summary>
 		/// Shoot a single bullet
 		/// </summary>
@@ -193,6 +194,11 @@ namespace Sandbox
 				{
 					tr.Surface.DoBulletImpact( tr );
 
+					if ( tr.Distance > 200 )
+					{
+						CreateTracerEffect( tr.EndPosition );
+					}
+
 					if ( !IsServer ) continue;
 					if ( !tr.Entity.IsValid() ) continue;
 
@@ -206,6 +212,17 @@ namespace Sandbox
 			}
 		}
 
+
+		[ClientRpc]
+		public void CreateTracerEffect( Vector3 hitPosition )
+		{
+			// get the muzzle position on our effect entity - either viewmodel or world model
+			var pos = EffectEntity.GetAttachment( "muzzle" ) ?? Transform;
+
+			var system = Particles.Create( "particles/tracer.standard.vpcf" );
+			system?.SetPosition( 0, pos.Position );
+			system?.SetPosition( 1, hitPosition );
+		}
 		public bool TakeAmmo( int amount )
 		{
 			if ( AmmoClip < amount )
